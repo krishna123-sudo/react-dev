@@ -1,47 +1,59 @@
-import React, { useEffect, useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import React from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 function Github() {
-    const data = useLoaderData()
-    // const [data, setData] = useState([])
-    // useEffect(() => {
-    //  fetch('https://api.github.com/users/krishna123-sudo')
-    //  .then(response => response.json())
-    //  .then(data => {
-    //     console.log(data);
-    //     setData(data)
-    //  })
-    // }, [])
-    
+  const data = useLoaderData();
+
   return (
-    <div className='text-center m-4 bg-gray-600 text-white p-4 text-3xl'>
-      <p>GitHub Followers: {data.followers}</p>
-      <p>GitHub Repositories: {data.public_repos}</p>
-      {/* <p>GitHub Bio: {data.bio}</p> */}
-      <div className='flex justify-between items-center'>
-          <img src={data.avatar_url} alt="GitHub Profile Picture" width={300} />
-          <p className='ml-6 text-left'>{data.bio}</p>
+    <div className="text-center m-4 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+      <h1 className="text-4xl font-semibold mb-4">GitHub Portfolio</h1>
+      
+      {/* Profile and Bio Section */}
+      <div className="flex flex-col lg:flex-row justify-center items-center space-x-0 lg:space-x-8 mb-6">
+        <img
+          src={data.avatar_url}
+          alt="GitHub Profile"
+          className="rounded-full border-4 border-blue-500 mb-4 lg:mb-0"
+          width={200}
+        />
+        <div className="text-left w-full lg:w-1/2">
+          <p className="text-xl font-medium mb-2">{data.name}</p>
+          <p className="text-lg text-gray-400 mb-4">{data.bio}</p>
+          {/* <p className="mb-2">Followers: <span className="text-blue-400">{data.followers}</span></p> */}
+          <p className="mb-2">Public Repos: <span className="text-blue-400">{data.public_repos}</span></p>
+        </div>
       </div>
-      <div>
-        <button className="mt-4 px-4 py-2 bg-green-500 hover:bg-blue-600 text-white font-bold rounded"
-          onClick={() => window.open("https://pastebin.com/u/kisu123", "_blank")}>
-          Visit My PasteBibn
+
+      {/* GitHub Visit Button */}
+      <div className="mt-6">
+        <button
+          className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full shadow-md"
+          onClick={() => window.open("https://github.com/krishna123-sudo?tab=repositories", "_blank")}
+        >
+          Visit My GitHub
         </button>
       </div>
-    {/* <img src={data.avatar_url} alt="Git picture" width={300} /> */}
-    <button
-    className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded"
-    onClick={() => window.open("https://github.com/krishna123-sudo?tab=repositories", "_blank")}
-    >
-    Visit GitHub
-     </button>
+
+      {/* Stats Section */}
+      <div className="mt-8 flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-8">
+        <img
+          src={`https://github-readme-stats.vercel.app/api?username=${data.login}&theme=vue-dark&show_icons=true&hide_border=false&count_private=true`}
+          alt="GitHub Stats"
+          className="w-full lg:w-1/2"
+        />
+        <img
+          src="https://github-readme-stats.vercel.app/api/top-langs/?username=krishna123-sudo&theme=vue-dark&show_icons=true&hide_border=false&layout=compact"
+          alt="Most Used Language"
+          className="w-full lg:w-1/2"
+        />
+      </div>
     </div>
-  )
+  );
 }
 
-export default Github
+export default Github;
 
 export const githubInfoLoader = async () => {
-    const response = await fetch('https://api.github.com/users/krishna123-sudo')
-    return response.json()
-}
+  const response = await fetch('https://api.github.com/users/krishna123-sudo');
+  return response.json();
+};

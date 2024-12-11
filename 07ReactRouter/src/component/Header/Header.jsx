@@ -1,106 +1,88 @@
-import React from 'react'
-import { Link ,NavLink} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Toggle mobile menu
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
-    <header className="shadow sticky z-50 top-0">
-    <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
+    <header className="sticky top-0 z-50 shadow-md">
+      {/* Navigation Bar */}
+      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 transition-all duration-300">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          {/* Logo Section */}
+          <div className="flex items-center">
+            <Link to="/" className="text-xl font-bold text-blue-600 hover:text-blue-800 transition-all duration-300">
+              <span className="text-blue-600 animate-blink mr-2">Krishna</span>
+              <span className="text-blue-600 animate-blink">Sekhar</span>
+            </Link>
+          </div>
 
-            <div className="flex items-center">
-                <Link to="/"  className="text-xl font-bold text-blue-600">
-                  <span className=" text-blue-600 animate-blink">Krishna</span>  <span className=" text-blue-600 animate-blink">Sekhar</span>
-                </Link>
-                <style>
-                    {`
-                    @keyframes blink {
-                        50% {
-                        opacity: 0;
-                        }
+          {/* Hamburger Icon for Mobile */}
+          <div className="lg:hidden flex items-center" onClick={toggleMenu}>
+            <button className="text-gray-700 focus:outline-none">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
+
+          {/* Navigation Links Section (Mobile/Tablet) */}
+          <div className={`lg:flex w-full lg:w-auto ${isMenuOpen ? 'block' : 'hidden'}`}>
+            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+              {['/', '/about', '/contact', '/github', '/skill'].map((path, index) => (
+                <li key={index}>
+                  <NavLink
+                    to={path}
+                    className={({ isActive }) =>
+                      `block py-2 pr-4 pl-3 duration-300 border-b border-transparent ${isActive ? "text-orange-700" : "text-gray-700"} lg:hover:bg-gray-100 lg:hover:scale-105 lg:transition-all lg:duration-300 lg:p-0`
                     }
-
-                    .animate-blink {
-                        animation: blink 1s infinite;
-                    }
-                    `}
-             </style>
-                </div>
-
-            <div className="flex items-center lg:order-2">
-            </div>
-            <div
-                className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-                id="mobile-menu-2"
-            >
-                <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                    <li>
-                        <NavLink
-                          to="/"
-                            className={({isActive}) =>
-                                `block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 ${isActive? 
-                                  "text-orange-700":"text-gray-700"} lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                            }
-                        >
-                            Home
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                          to="/about"
-                            className={({isActive}) =>
-                                `block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 ${isActive? 
-                                  "text-orange-700":"text-gray-700"} lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                            }
-                        >
-                            About
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                          to="/contact"
-                            className={({isActive}) =>
-                                `block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 ${isActive? 
-                                  "text-orange-700":"text-gray-700"} lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                            }
-                        >
-                            Contact
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                          to="/github"
-                            className={({isActive}) =>
-                                `block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 ${isActive? 
-                                  "text-orange-700":"text-gray-700"} lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                            }
-                        >
-                            GitHub
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                          to="/skill"
-                            className={({isActive}) =>
-                                `block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 ${isActive? 
-                                  "text-orange-700":"text-gray-700"} lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                            }
-                        >
-                            Skill
-                        </NavLink>
-                    </li>
-                    
-                    
-                    
-                </ul>
-            </div>
+                  >
+                    {getLinkName(path)}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-    </nav>
-</header>
+      </nav>
+
+      {/* Keyframe Animation for Blinking Effect */}
+      <style>
+        {`
+          @keyframes blink {
+            50% {
+              opacity: 0;
+            }
+          }
+
+          .animate-blink {
+            animation: blink 1s infinite;
+          }
+        `}
+      </style>
+    </header>
   );
 }
 
-export default Header
+// Helper function to return link names based on path
+function getLinkName(path) {
+  switch (path) {
+    case '/':
+      return 'Home';
+    case '/about':
+      return 'About';
+    case '/contact':
+      return 'Contact';
+    case '/github':
+      return 'GitHub';
+    case '/skill':
+      return 'Skill';
+    default:
+      return '';
+  }
+}
+
+export default Header;
