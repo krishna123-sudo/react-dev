@@ -2,7 +2,7 @@ import React from 'react';
 
 function Skill() {
   return (
-    <div className="p-6 bg-gray-100 rounded-lg shadow-lg">
+    <div className="p-10 bg-white rounded-lg shadow-2xl border border-gray-200 max-w-4xl mx-auto my-10">
       <h2 className="text-3xl font-bold text-center mb-6 text-blue-600">My Skills</h2>
       <ul className="space-y-6">
         {[

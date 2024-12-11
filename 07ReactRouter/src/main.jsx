@@ -10,16 +10,17 @@ import Contact from './component/Contact/contact.jsx'
 // import User from './component/User/User.jsx'
 import GitHub,{githubInfoLoader} from './component/GitHub/GitHub.jsx'
 import Skill from './component/Skill/Skill.jsx'
+import Login from './component/Login/Login.jsx'
+
+const isAuthenticated = false;
+
 
 const router=createBrowserRouter(
   createRoutesFromElements(
-   <Route Path='/' element={<Layout/>}>
+    <Route Path='/' element={<Layout />}>
       <Route path='' element={<Home />}/>
       <Route path='about' element={<About/>}/>
       <Route path='contact' element={<Contact/>}/>
-      {/* <Route path='user/' element={<User />}>
-        <Route path=':userid' element={<User />} />
-      </Route> */}
       <Route loader={githubInfoLoader} path='GitHub' element={<GitHub />}/>
       <Route path='Skill' element={<Skill />}/>
       <Route path='*' element={<div>Not Found</div>} />
